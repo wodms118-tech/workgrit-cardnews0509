@@ -36,7 +36,9 @@ async function generateContent(category) {
     messages: [{ role: 'user', content: prompt }],
   });
 
-  const content = JSON.parse(response.content[0].text);
+  let raw = response.content[0].text;
+  raw = raw.replace(/```json\s*([\s\S]*?)\s*```/g, '$1').trim();
+  const content = JSON.parse(raw);
   return content;
 }
 
