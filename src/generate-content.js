@@ -36,10 +36,11 @@ async function generateContent(category) {
     messages: [{ role: 'user', content: prompt }],
   });
 
-  let raw = response.content[0].text;
-  raw = raw.replace(/```json\s*([\s\S]*?)\s*```/g, '$1').trim();
-  const content = JSON.parse(raw);
-  return content;
+  const cleanJson = response.content[0].text
+    .replace(/```json\n?/g, '')
+    .replace(/```\n?/g, '')
+    .trim();
+  return JSON.parse(cleanJson);
 }
 
 module.exports = generateContent;
