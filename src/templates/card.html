@@ -55,26 +55,56 @@
         }
 
         .category {
-            font-size: 24px;
-            font-weight: 500;
+            font-size: 28px;
+            font-weight: 300;
             color: {{accent_color}};
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 7px;
             margin-bottom: 20px;
             opacity: 0.9;
         }
 
-        .title {
-            font-size: 72px;
+        .point-bar {
+            width: 80px;
+            height: 4px;
+            background: {{accent_color}};
+            margin-bottom: 30px;
+            border-radius: 2px;
+        }
+
+        .title-section {
+            margin-bottom: 40px;
+        }
+
+        .front-text {
+            font-size: 44px;
+            font-weight: 300;
+            line-height: 1.2;
+            margin-bottom: 10px;
+            display: inline;
+        }
+
+        .keyword {
+            font-size: 88px;
             font-weight: 900;
             line-height: 1.1;
-            margin-bottom: 40px;
-            text-shadow: 0 4px 8px rgba(0,0,0,0.5);
+            color: {{accent_color}};
+            transform: rotate(-3deg);
+            display: inline-block;
+            margin: 0 10px;
+            text-shadow: 0 4px 8px rgba(0,0,0,0.7);
+        }
+
+        .back-text {
+            font-size: 44px;
+            font-weight: 300;
+            line-height: 1.2;
+            display: inline;
         }
 
         .subtitle {
-            font-size: 36px;
-            font-weight: 400;
+            font-size: 32px;
+            font-weight: 300;
             line-height: 1.4;
             opacity: 0.95;
             text-shadow: 0 2px 4px rgba(0,0,0,0.3);
@@ -98,7 +128,12 @@
 
     <div class="content">
         <div class="category">{{category}}</div>
-        <div class="title">{{title}}</div>
+        <div class="point-bar"></div>
+        <div class="title-section">
+            <span class="front-text">{{front_text}}</span>
+            <span class="keyword">{{keyword}}</span>
+            <span class="back-text">{{back_text}}</span>
+        </div>
         <div class="subtitle">{{content}}</div>
     </div>
 

@@ -16,6 +16,24 @@ const categoryColors = {
   'AI프롬프트': '#7EB8FF'
 };
 
+function parseTitle(title) {
+  // "앞문장|핵심단어|뒷문장" 형식으로 파싱
+  const parts = title.split('|');
+  if (parts.length === 3) {
+    return {
+      frontText: parts[0],
+      keyword: parts[1],
+      backText: parts[2]
+    };
+  }
+  // 파싱 실패시 기본값
+  return {
+    frontText: '',
+    keyword: title,
+    backText: ''
+  };
+}
+
 async function generateImages(content) {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
@@ -30,13 +48,17 @@ async function generateImages(content) {
 
   for (let i = 0; i < content.cards.length; i++) {
     const card = content.cards[i];
+    const titleParts = parseTitle(card.title);
+
     let html = await fs.readFile('./src/templates/card.html', 'utf-8');
     html = html
-      .replace('{{category}}', content.category)
-      .replace('{{title}}', card.title)
-      .replace('{{content}}', card.content)
-      .replace('{{image_url}}', imageUrl)
-      .replace('{{accent_color}}', accentColor);
+      .replace(/\{\{category\}\}/g, content.category)
+      .replace(/\{\{front_text\}\}/g, titleParts.frontText)
+      .replace(/\{\{keyword\}\}/g, titleParts.keyword)
+      .replace(/\{\{back_text\}\}/g, titleParts.backText)
+      .replace(/\{\{content\}\}/g, card.content)
+      .replace(/\{\{image_url\}\}/g, imageUrl)
+      .replace(/\{\{accent_color\}\}/g, accentColor);
 
     await page.setContent(html);
     await page.screenshot({ path: path.join(outputDir, `card_${String(i+1).padStart(2, '0')}.png`) });
