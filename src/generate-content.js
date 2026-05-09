@@ -7,6 +7,8 @@ const client = new Anthropic({
 
 async function generateContent(category) {
   const prompt = `
+반드시 JSON만 반환하세요. 다른 텍스트나 코드블록 없이 순수 JSON만 출력하세요.
+
 카테고리: ${category}
 
 워크그릿 인스타 카드뉴스 콘텐츠를 생성하세요.
