@@ -38,11 +38,10 @@ async function generateContent(category) {
     messages: [{ role: 'user', content: prompt }],
   });
 
-  const cleanJson = response.content[0].text
-    .replace(/```json\n?/g, '')
-    .replace(/```\n?/g, '')
-    .trim();
-  return JSON.parse(cleanJson);
+  const text = response.content[0].text;
+  const jsonMatch = text.match(/\{[\s\S]*\}/);
+  if (!jsonMatch) throw new Error('JSON not found');
+  return JSON.parse(jsonMatch[0]);
 }
 
 module.exports = generateContent;
